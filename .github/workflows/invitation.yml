@@ -6,19 +6,30 @@ jobs:
   automate_invite:
     runs-on: ubuntu-latest
     steps:
-      - name: Invite on label
+      - name: Invite to the GitHub org
         uses: vj-abigo/invite-on-label@v1.4
         with:
           organization: vector-ui
           label: invite me to the organisation
-          repo-token: ${{ secrets.INVITE_TOKEN }}  # PAT with org+repo permissions
-          comment: "<b>Invitation sent to join the Vector UI GitHub Organisation. Welcome to the community 🎉</b><br><br>Don't forget after accepting to make it public so it appears on your GitHub profile for everyone else to see. You can do this by finding your name in the GitHub organisation list and change the dropdown to public https://github.com/orgs/vector-ui/people<br><br>Practice repo, instructions on how to add your name to the README https://github.com/vector-ui/<br>Remember contributing to open source is not just about code, it's about collaboration, communication and adding value<br>I hope that helps"
+          repo-token: ${{ secrets.INVITE_TOKEN }}
         env:
           INVITE_TOKEN: ${{ secrets.INVITE_TOKEN }}
 
-      - name: Close issue after invite
+      - name: Comment after invite
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.INVITE_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            <b>✅ Invitation sent to join the Vector UI GitHub Organisation. Welcome to the community 🎉</b><br><br>
+            Don’t forget to make your org membership public so it shows on your profile. 
+            Here’s how 👉 https://github.com/orgs/vector-ui/people<br><br>
+            Here's a practice repo: https://github.com/vector-ui/<br>
+            Remember — contributing to open source is about collaboration, not just code! 🚀
+
+      - name: Close the issue
         uses: peter-evans/close-issue@v3
         with:
-          issue-number: ${{ github.event.issue.number }}
-          comment: "✅ Invitation sent successfully. Closing this issue now. Welcome aboard!"
           token: ${{ secrets.INVITE_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          comment: "✅ Issue closed automatically after sending the invite. Welcome aboard!"
