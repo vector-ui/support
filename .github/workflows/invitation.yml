@@ -22,6 +22,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             <b>✅ Invitation sent to join the Vector UI GitHub Organisation. Welcome to the community 🎉</b><br><br>
+            👉 [Click here to accept your GitHub invite](https://github.com/settings/organizations)<br><br>
             Don’t forget to make your org membership public so it shows on your profile. 
             Here’s how 👉 https://github.com/orgs/vector-ui/people<br><br>
             Here's a practice repo: https://github.com/vector-ui/<br>
